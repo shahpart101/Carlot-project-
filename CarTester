@@ -1,0 +1,35 @@
+public class CarTester {
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+
+        //1. Instantiate at least 2 Car objects
+        //1st car object.
+        Car carObj1 = new Car("1985 Ferrari 308GT", 10.00, 20.00, 200000.00, 100000.00);
+
+        //Testing toString
+        //internally toString of Car class is invoked
+        System.out.println(carObj1);
+
+        //Sell Car
+        carObj1.sellCar(300000);
+
+        //Testing toString after selling car
+        //internally automatically toString of Car class is invoked
+        System.out.println(carObj1);
+
+        //1st car object.
+        Car carObj2 = new Car("2015 Ford Mustang", 05.00, 10.00, 100000.00, 200000.00);
+
+         //Sell Car
+        carObj2.sellCar(400000);
+
+        //Testing compare methods.
+        System.out.println("Compare Car 1 And car 2 MPG : " + carObj1.compareMPG(carObj2));
+        System.out.println("Compare Car 1 And car 2 Miles : " + carObj1.compareMiles(carObj2));
+        System.out.println("Compare Car 1 And car 2 Price : " + carObj1.comparePrice(carObj2));
+    }
+
+}
