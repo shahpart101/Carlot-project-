@@ -1,0 +1,114 @@
+import java.util.Scanner;
+import java.util.Collections;
+import java.io.IOException;
+import java.util.ArrayList;
+
+public class CarLotMain {
+
+    public static void main(String[] args){
+
+        // create new carlot
+
+        CarLot ourCarLot = new CarLot();
+        // get inputs
+
+        Scanner input = new Scanner(System.in);
+        String prompt ="[0] Exit \n[1] Add a car to inventory \n[2] Sell a car from inventory \n[3] Save To Disk \n[4] Load From Disk \n[5] List inventory by order of acquisition \n[6] List Inventory From Best MPG to Worst MPG \n[7] Display car with best MPG \n[8] Display car with the highest mileage \n[9] Display overall MPG for the entire inventory \n[10] Display profit for all sold cars \nEnter a number from 0 to 10 :";
+
+        int option = 0;
+
+        do{
+            System.out.println(prompt);
+            option = input.nextInt();
+
+            switch(option){
+
+                case 0: {
+                    System.out.println("Exiting... Thanks for visiting our carlot! Please come again!");
+                    System.exit(0);
+                }
+                case 1: {
+                    System.out.println("Enter the car's identifier: ");
+                    input.nextLine();
+                    String id = input.nextLine();
+                    System.out.println("Enter the current mileage on the car: ");
+                    int mileage = input.nextInt();
+                    System.out.println("Enter the car's MPG rating: ");
+                    int MPG = input.nextInt();
+                    System.out.println("Enter the cost of the car: ");
+                    double cost = input.nextDouble();
+                    System.out.println("Enter the asking price for the car: ");
+                    double salesPrice = input.nextDouble();
+                    ourCarLot.addCar(id, mileage, MPG, cost, salesPrice);
+                    System.out.println("Cars in our inventory are: " + ourCarLot.getInventory());
+                    break;
+                }
+                case 2: {
+                    System.out.println("Enter the identifier for the car to be sold: ");
+                    input.nextLine();
+                    String id = input.nextLine();
+                    System.out.println("Enter the price the car is sold at: ");
+                    double priceSold = input.nextDouble();
+                    try{
+                        ourCarLot.sellCar(id, priceSold);
+                    }
+                    catch(Exception ex){
+                        System.out.println("We couldn't find or sell that car. " + ex.getMessage());
+                    }
+                    
+                    System.out.println("Cars in our inventory are: " + ourCarLot.getInventory());
+                    break;
+                }
+                case 3: {
+                    try{
+                        ourCarLot.saveToDisk();
+                    }
+                    catch(IOException e){
+                        System.out.println("Couldn't save the file: " + e.getMessage());
+                    }
+                    break;
+                }
+                case 4: {
+                    try{
+                        ourCarLot.loadFromDisk();
+                    }
+                    catch(Exception e){
+                        System.out.println("Couldn't load the inventory: " + e.getMessage());
+                    }
+                    break;
+                }
+                case 5: {
+                    System.out.println("Cars in the order acquired: " + ourCarLot.getCarsInOrderOfEntry());
+                    break;
+                }
+                case 6: {
+                   ArrayList sortedCars =  ourCarLot.getCarsSortedByMPG();
+                   Collections.reverse(sortedCars);
+                   System.out.println("Cars from the best MPG to the worst MPG: " + sortedCars); 
+                   break;
+                }
+                case 7: {
+                    System.out.println("Car with the best MPG: " + ourCarLot.getCarWithBestMPG());
+                    break;
+                }
+                case 8: {
+                    System.out.println("Car with the highest mileage: " + ourCarLot.getCarWithHighestMileage());
+                    break;
+                }
+                case 9: {
+                    System.out.println("Average MPG for all the cars in the inventory: " + ourCarLot.getAverageMpg());
+                    break;
+                }
+                case 10: {
+                    System.out.println("Profit from all the cars sold: " + ourCarLot.getTotalProfit());
+                    break;
+                }
+            }
+            System.out.println("Type 11 to reach the main menu and choose your next option.");
+            option = input.nextInt();
+        }
+        while(option >= 0 && option <= 11);
+        input.close();
+    }
+    
+}
